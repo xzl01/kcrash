@@ -28,7 +28,7 @@ generate_export_header(KF5Crash BASE_NAME KCrash)
 target_include_directories(KF5Crash INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KCrash>")
 
 target_link_libraries(KF5Crash PUBLIC Qt${QT_MAJOR_VERSION}::Core)
-target_link_libraries(KF5Crash PRIVATE KF5::CoreAddons KF5::WindowSystem)
+target_link_libraries(KF5Crash PRIVATE Qt${QT_MAJOR_VERSION}::Gui KF5::CoreAddons)
 
 # FIXME: It is needed to work around undefined reference error on FreeBSD
 # caused by --no-undefined because the `environ' variable does not exist
@@ -40,13 +40,11 @@ if (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
 endif ()
 
 if(WITH_X11)
-    if (TARGET Qt5::X11Extras)
-        set(_qt_x11_libs Qt5::X11Extras)
-    elseif (TARGET Qt6::Gui)
-        set(_qt_x11_libs Qt6::GuiPrivate) # Gui/private/qtx11extras_p.h
+    if (QT_MAJOR_VERSION STREQUAL "5")
+      target_link_libraries(KF5Crash PRIVATE Qt5::X11Extras)
     endif()
 
-    target_link_libraries(KF5Crash PRIVATE X11::X11 ${_qt_x11_libs})
+    target_link_libraries(KF5Crash PRIVATE X11::X11)
 endif()
 
 set_target_properties(KF5Crash PROPERTIES VERSION   ${KCrash_VERSION}
@@ -61,7 +59,7 @@ ecm_generate_headers(KCrash_HEADERS
   REQUIRED_HEADERS KCrash_HEADERS
 )
 
-install(TARGETS KF5Crash EXPORT KF5CrashTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5Crash EXPORT KF5CrashTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kcrash_export.h
