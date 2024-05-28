@@ -3,13 +3,12 @@ Section: libs
 Priority: optional
 Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
 Uploaders: Aurélien COUDERC <coucouf@debian.org>,
-           Norbert Preining <norbert@preining.info>,
+           Patrick Franz <deltaone@debian.org>,
 Build-Depends: cmake (>= 3.16~),
                debhelper-compat (= 13),
                doxygen,
-               extra-cmake-modules (>= 5.103.0~),
-               libkf5coreaddons-dev (>= 5.103.0~),
-               libkf5windowsystem-dev (>= 5.101.0~),
+               extra-cmake-modules (>= 5.115.0~),
+               libkf5coreaddons-dev (>= 5.115.0~),
                libqt5sql5-sqlite,
                libqt5x11extras5-dev (>= 5.15.2~),
                libx11-dev,
@@ -28,9 +27,8 @@ Rules-Requires-Root: no
 Package: libkf5crash-dev
 Section: libdevel
 Architecture: any
-Depends: libkf5coreaddons-dev (>= 5.103.0~),
+Depends: libkf5coreaddons-dev (>= 5.115.0~),
          libkf5crash5 (= ${binary:Version}),
-         libkf5windowsystem-dev (>= 5.101.0~),
          qtbase5-dev (>= 5.15.2~),
          ${misc:Depends},
 Breaks: kded5-dev (<< 5.54), libkf5kdelibs4support-dev (<< 5.54),
